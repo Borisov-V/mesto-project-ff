@@ -20,6 +20,7 @@ function createCard(cardTemplate, cardContent, deleteCard) {
   cardDeleteButton.addEventListener('click', deleteCard);
   cardTitle.textContent = cardContent.name;
   cardImage.src = cardContent.link;
+  cardImage.alt = cardContent.alt;
   
   return card;
 }
