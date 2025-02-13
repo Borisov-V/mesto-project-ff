@@ -30,3 +30,5 @@ const initialCards = [
     alt: 'Скала окруженная голубым льдом замерзшего озера.',
   },
 ];
+
+export {initialCards};
