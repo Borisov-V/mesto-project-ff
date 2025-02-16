@@ -1,7 +1,3 @@
-// 1. Функция создания карточки
-// 2. Функция обработки события лайка
-// 3. Функция удаления карточки
-
 export function createCard(
   cardTemplate,
   cardContent,
