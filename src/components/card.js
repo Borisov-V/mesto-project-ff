@@ -26,7 +26,6 @@ export function createCard(
 }
 
 export function deleteCard(card) {
-  console.dir(card);
   card.remove();
 }
 
