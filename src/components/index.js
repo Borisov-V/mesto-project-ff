@@ -20,6 +20,7 @@ const profileTitle = profile.querySelector('.profile__title');
 const profileDescription = profile.querySelector('.profile__description');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const newCardButton = profile.querySelector('.profile__add-button');
+const popups = document.querySelectorAll('.popup');
 
 const profileEditPopup = document.querySelector('.popup_type_edit');
 const editForm = document.forms['edit-profile'];
@@ -46,7 +47,7 @@ function handleEditFormSubmit(evt) {
   profileTitle.textContent = editInputName.value;
   profileDescription.textContent = editInputDescription.value;
 
-  closeModal(this.closest('.popup_is-opened'));
+  closeModal(profileEditPopup);
 }
 
 function handleNewCardFormSumbit(evt) {
@@ -69,8 +70,19 @@ function handleNewCardFormSumbit(evt) {
   );
 
   this.reset();
-  closeModal(this.closest('.popup_is-opened'));
+  closeModal(newCardPopup);
 }
+
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (
+      evt.target === evt.currentTarget ||
+      evt.target.classList.contains('popup__close')
+    ) {
+      closeModal(popup);
+    }
+  });
+});
 
 profileEditButton.addEventListener('click', () => {
   openModal(profileEditPopup);
