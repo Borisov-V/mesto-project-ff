@@ -108,4 +108,13 @@ initialCards.forEach(function (cardContent) {
       openImagePopup
     )
   );
+  console.log(
+    createCard(
+      cardTemplate,
+      cardContent,
+      deleteCard,
+      handleLike,
+      openImagePopup
+    )
+  );
 });
