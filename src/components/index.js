@@ -12,6 +12,7 @@ import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { createCard, deleteCard, handleLike } from './card.js';
 import { openModal, closeModal } from './modal.js';
+import { enableValidation, clearValidation } from './validation.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
 const placesList = document.querySelector('.places__list');
@@ -33,6 +34,15 @@ const popupCaption = imagePopup.querySelector('.popup__caption');
 const newCardForm = document.forms['new-place'];
 const newCardInputPlace = newCardForm.elements['place-name'];
 const newCardInputLink = newCardForm.elements.link;
+
+const validationOptions = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};
 
 function openImagePopup(name, link) {
   openModal(imagePopup);
@@ -71,14 +81,30 @@ function handleNewCardFormSumbit(evt) {
 
   this.reset();
   closeModal(newCardPopup);
+  clearValidation(newCardForm, validationOptions);
 }
 
 popups.forEach((popup) => {
+  const popupContent = popup.querySelector('.popup__content');
+  let mouseInsideContent = false;
+
+  popupContent.addEventListener('mousedown', () => {
+    mouseInsideContent = true;
+  });
+
+  popupContent.addEventListener('mouseup', () => {
+    mouseInsideContent = true;
+  });
+
   popup.addEventListener('click', (evt) => {
-    if (
-      evt.target === evt.currentTarget ||
-      evt.target.classList.contains('popup__close')
-    ) {
+    if (evt.target.classList.contains('popup__close')) {
+      closeModal(popup);
+    } else if (mouseInsideContent) {
+      // Если клик начался или закончился не на оверлее,
+      // закрытие попапа не сработает.
+      mouseInsideContent = false;
+      return;
+    } else if (evt.target === evt.currentTarget) {
       closeModal(popup);
     }
   });
@@ -89,6 +115,8 @@ profileEditButton.addEventListener('click', () => {
 
   editInputName.value = profileTitle.textContent;
   editInputDescription.value = profileDescription.textContent;
+
+  clearValidation(editForm, validationOptions);
 });
 
 newCardButton.addEventListener('click', () => {
@@ -109,3 +137,5 @@ initialCards.forEach(function (cardContent) {
     )
   );
 });
+
+enableValidation(validationOptions);
