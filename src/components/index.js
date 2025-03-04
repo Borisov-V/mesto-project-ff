@@ -66,6 +66,7 @@ function openImagePopup(name, link) {
 
   popupCaption.textContent = name;
   popupImage.src = link;
+  popupImage.alt = name;
 }
 
 function openDeleteCardPopup(card, cardId) {
